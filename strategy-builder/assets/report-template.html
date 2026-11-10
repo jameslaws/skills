@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{PRODUCT}} — Strategy drafts {{VERSION}} — {{DATE}}</title>
+<!--
+  Strategy Builder: strategy drafts template (rebuilt 2026-10-29).
+  - ONE self-contained, shareable HTML file with TABS: Overview, one tab per strategy (2–3), More directions,
+    Market & sources.
+  - Strategy 1 is the HOLD (the strategy if the product stays roughly where it is). Strategies 2–3 are MOVES
+    (an adjacent gap the product could move into). Set the kind label on the line-up card, the tab button and
+    the hero. Every strategy has the "From here to there" part; for a Hold it is short, for a Move it is the core.
+    The tabs are plain sections; a few lines of inline script show one at a time. With no script, or when
+    printing, every tab shows in order.
+  - Light mode only. No external fonts, scripts or images. Diagrams are inline SVG.
+  - Copy the <article class="tab strategy"> block once per strategy. Give each its own id (s1, s2, s3), a
+    matching tab button, and its own accent:
+      Ember:  --accent:#c2410c; --accent-soft:#fdeee4; --accent-ink:#7c2d12
+      Lagoon: --accent:#0f766e; --accent-soft:#e3f4f1; --accent-ink:#134e4a
+      Indigo: --accent:#4338ca; --accent-soft:#eceafd; --accent-ink:#312e81
+      Plum:   --accent:#9d174d; --accent-soft:#fbe7ef; --accent-ink:#701a40
+  - Repeat list items / cards as needed. Delete any block that has nothing real in it.
+  - Before delivering, search for "{{" and make sure none remain.
+-->
+<style>
+:root{
+  --paper:#f6f2ea; --paper-2:#efe9de; --ink:#191612; --muted:#6b6358; --rule:#d8cfc1; --card:#fffdf8;
+  --display:"Didot","Bodoni 72","Bodoni MT","Iowan Old Style",Georgia,serif;
+  --serif:"Charter","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --label:"Avenir Next","Avenir","Futura","Gill Sans","Helvetica Neue",sans-serif;
+  --known:#166534; --known-soft:#e2f3e8; --part:#92400e; --part-soft:#fbefd9; --miss:#9f1239; --miss-soft:#fbe4ea;
+  --accent:#6b6358; --accent-soft:#efe9de; --accent-ink:#191612;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.62 var(--serif);-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(rgba(25,22,18,.035) 1px,transparent 1px);background-size:4px 4px}
+a{color:inherit}
+p{margin:0 0 14px}
+.label{font:600 11.5px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+.narrow{max-width:760px}
+h2.h{font:400 40px/1.1 var(--display);margin:8px 0 22px}
+.lede{font-size:21px;color:var(--muted);max-width:760px}
+
+/* tab bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(246,242,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:6px;height:60px;overflow-x:auto}
+.bar .brand{font:700 13px/1 var(--label);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-right:16px}
+.tabbtn{display:flex;align-items:center;gap:8px;text-decoration:none;font:500 14.5px/1 var(--label);white-space:nowrap;color:var(--muted);padding:10px 14px;border-radius:999px;border:1px solid transparent}
+.tabbtn:hover{color:var(--ink);background:var(--card)}
+.tabbtn i{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block}
+.tabbtn[aria-selected="true"]{color:var(--ink);background:var(--card);border-color:var(--rule);font-weight:600}
+.js .tab{display:none}
+.js .tab.on{display:block}
+
+/* overview */
+.cover{padding:84px 0 48px;border-bottom:1px solid var(--rule)}
+.cover h1{font:400 clamp(56px,9vw,104px)/.95 var(--display);letter-spacing:-.02em;margin:18px 0 12px}
+.howto{margin:22px 0 0;font-size:16px;color:var(--muted);max-width:760px}
+.lineup{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:40px 0 0}
+.lineup a{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border:1px solid var(--rule);border-top:6px solid var(--accent);border-radius:4px;padding:20px 22px 22px;transition:transform .2s ease,box-shadow .2s ease}
+.lineup a:hover{transform:translateY(-3px);box-shadow:0 10px 24px -14px rgba(25,22,18,.35)}
+.lineup .n{font:400 46px/1 var(--display);color:var(--accent)}
+.lineup h3{font:400 27px/1.15 var(--display);margin:8px 0 8px}
+.lineup p{margin:0 0 10px;color:var(--muted);font-size:16px}
+.lineup .tl{font:400 21px/1.25 var(--display);color:var(--accent-ink);margin:6px 0 14px}
+.lineup .open{margin-top:auto;font:600 13px/1 var(--label);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.leaning{margin:22px 0 0;font-size:16px;color:var(--muted)}
+.leaning b{color:var(--ink)}
+.kind{display:inline-block;font:700 11px/1 var(--label);letter-spacing:.12em;text-transform:uppercase;border-radius:3px;padding:5px 8px;margin:0 0 8px;background:var(--accent-soft);color:var(--accent-ink);border:1px solid var(--accent)}
+.lineup .kind{align-self:flex-start;margin:10px 0 0}
+.strategy .kind{margin:0 0 0 10px;vertical-align:2px}
+.journey{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;margin:6px 0 18px}
+.journey .end{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:16px 18px}
+.journey .end.to{border-color:var(--accent);background:var(--accent-soft)}
+.journey .arrow{align-self:center;font:400 34px/1 var(--display);color:var(--accent)}
+.kbs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kbs>div{background:var(--card);border:1px solid var(--rule);border-top:4px solid var(--accent);border-radius:4px;padding:14px 16px}
+.kbs h4{font:700 12px/1 var(--label);letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px;color:var(--accent-ink)}
+.kbs ul{margin:0;padding-left:18px;font-size:16px}
+.distance{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.distance .card b{display:block;font:400 24px/1.15 var(--display);color:var(--accent-ink);margin:4px 0 6px}
+.gaps{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.gap{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:18px 20px}
+.gap h4{font:400 24px/1.2 var(--display);margin:0 0 8px}
+.gap dl{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:15.5px}
+.gap dt{font:600 11px/1.6 var(--label);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gap dd{margin:0}
+.map .move{stroke-width:2;fill:none;marker-end:url(#arrowhead)}
+.changed{margin:32px 0 0;background:var(--card);border:1px dashed var(--muted);border-radius:4px;padding:18px 22px}
+.changed h4{margin:0 0 8px}
+.changed p,.changed li{font-size:16px}
+.osec{padding:56px 0;border-bottom:1px solid var(--rule)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.fact{min-width:0;overflow-wrap:anywhere;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:16px 18px}
+.fact .label{display:block;margin-bottom:8px}
+.fact p{margin:0;font-size:16px}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px 34px}
+.quote q{display:block;font:italic 400 22px/1.38 var(--serif);quotes:"“" "”"}
+.quote .who{margin-top:10px}
+.quote .why{font-size:15px;color:var(--muted);margin-top:4px}
+.shared li{margin:0 0 8px}
+
+/* strategy tab */
+.strategy .hero{background:var(--accent-soft);border-bottom:1px solid var(--rule);padding:72px 0 52px;position:relative;overflow:hidden}
+.strategy .hero::after{content:attr(data-n);position:absolute;right:-10px;top:-40px;font:400 340px/1 var(--display);color:var(--accent);opacity:.09;pointer-events:none}
+.strategy .kicker{color:var(--accent-ink)}
+.strategy h2.name{font:400 clamp(44px,7vw,80px)/1 var(--display);letter-spacing:-.015em;margin:14px 0 18px;max-width:900px}
+.strategy .idea{font:400 28px/1.3 var(--serif);max-width:840px;margin:0}
+.strategy .heroline{margin:26px 0 0;display:inline-block;background:var(--accent);color:#fff;border-radius:4px;padding:14px 20px}
+.strategy .heroline q{font:400 26px/1.2 var(--display);quotes:"“" "”"}
+.strategy .heroline span{display:block;font-size:15px;opacity:.9;margin-top:4px}
+.strategy .from{margin-top:14px;font-size:15px;color:var(--accent-ink)}
+.revised{margin:22px 0 0;border-left:4px solid var(--accent);background:var(--card);padding:12px 16px;font-size:15.5px;max-width:840px}
+.revised b{font:700 12px/1 var(--label);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)}
+.doc{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;padding-top:12px}
+.toc{position:sticky;top:84px;align-self:start;padding-top:40px;max-height:calc(100vh - 100px);overflow:auto}
+.toc ol{list-style:none;margin:10px 0 0;padding:0;counter-reset:t}
+.toc li{counter-increment:t;margin:0}
+.toc a{display:block;text-decoration:none;font:500 13.5px/1.35 var(--label);color:var(--muted);padding:6px 0 6px 12px;border-left:2px solid var(--rule)}
+.toc a::before{content:counter(t) ". ";color:var(--accent)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.part{padding:44px 0 8px;border-bottom:1px solid var(--rule)}
+.part:last-child{border-bottom:0}
+.part > h3{font:400 34px/1.1 var(--display);margin:6px 0 20px}
+.part > .label{color:var(--accent-ink)}
+.sub{font:600 12px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:28px 0 12px;display:block}
+.statement{font-size:21px;line-height:1.55;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:22px 26px 22px 32px;position:relative}
+.statement::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--accent);border-radius:4px 0 0 4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{min-width:0;overflow-wrap:anywhere;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:16px 20px}
+.card .label{display:block;color:var(--accent-ink);margin-bottom:6px}
+.card .word{display:block;font:400 32px/1.1 var(--display);margin:4px 0 6px}
+.card p{margin:0 0 8px;font-size:16px}
+.card p:last-child{margin-bottom:0}
+.muted{color:var(--muted)}
+.pitch{list-style:none;margin:0;padding:0;border-left:6px solid var(--accent);background:var(--card);border-radius:0 4px 4px 0}
+.pitch li{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:14px 22px;border-bottom:1px solid var(--rule)}
+.pitch li:last-child{border-bottom:0}
+.pitch .q{font:600 11px/1.5 var(--label);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);padding-top:4px}
+.pitch .a{font-size:18px}
+.voice q{display:block;font:italic 400 20px/1.4 var(--serif);quotes:"“" "”";border-left:3px solid var(--accent);padding-left:14px;margin:0 0 6px}
+.voice .src{font-size:14px;color:var(--muted);margin:0 0 16px 17px}
+.story{background:var(--paper-2);border-radius:4px;padding:20px 24px;font-size:18.5px}
+.objections{display:grid;gap:12px}
+.objection{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px 18px}
+.objection b{display:block;font:italic 400 19px/1.35 var(--serif);margin-bottom:4px}
+.objection p{margin:0;font-size:16px}
+.alts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.alt{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:16px 18px}
+.alt h4{font:600 17px/1.2 var(--label);margin:0 0 8px}
+.alt dl{margin:0;font-size:15.5px}
+.alt dt{font:600 10.5px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:10px 0 3px}
+.alt dd{margin:0}
+.swap{margin:14px 0 0;font-size:16px;color:var(--muted)}
+.swap b{color:var(--ink)}
+
+/* taglines */
+.pick{background:var(--accent);color:#fff;border-radius:4px;padding:30px 32px 26px;margin:0 0 16px}
+.block .pick .label,.part .pick .label{color:rgba(255,255,255,.82)}
+.pick q{display:block;font:400 clamp(30px,4.2vw,46px)/1.12 var(--display);quotes:"“" "”";margin:10px 0 12px}
+.pick .subline{font-size:18px;opacity:.94}
+.pick .note{font-size:15px;opacity:.82;margin-top:8px}
+.tags{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tag{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:16px 18px}
+.tag .type{display:inline-block;font:600 10.5px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent-soft);padding:5px 7px;border-radius:3px}
+.tag q{display:block;font:400 21px/1.25 var(--display);quotes:"“" "”";margin:10px 0 6px}
+.tag p{margin:0;font-size:14.5px;color:var(--muted);overflow-wrap:anywhere}
+
+/* messaging */
+.promise{font:400 26px/1.3 var(--serif);margin:0 0 18px;max-width:860px}
+.messages{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:m}
+.msg{counter-increment:m;border-top:2px solid var(--ink);padding-top:12px;min-width:0}
+.msg::before{content:counter(m,decimal-leading-zero);font:400 34px/1 var(--display);color:var(--accent)}
+.msg h4{font:600 17px/1.3 var(--label);margin:10px 0 6px}
+.msg p{margin:0 0 8px;font-size:15.5px;color:var(--muted)}
+.words{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.words ul{margin:0;padding-left:20px;font-size:16px}
+.words .no li{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(159,18,57,.5)}
+.traits{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.trait{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px 18px}
+.trait h4{font:600 16px/1.2 var(--label);margin:0 0 6px}
+.trait p{margin:0;font-size:15px}
+.trait .not{color:var(--muted)}
+
+/* marketing */
+.site{background:var(--card);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.site .chrome{height:26px;background:var(--paper-2);border-bottom:1px solid var(--rule);display:flex;gap:6px;align-items:center;padding:0 10px}
+.site .chrome i{width:9px;height:9px;border-radius:50%;background:var(--rule)}
+.site .hero2{padding:34px 34px 26px;border-bottom:1px solid var(--rule)}
+.site .hero2 h4{font:400 clamp(28px,4vw,42px)/1.1 var(--display);margin:0 0 10px}
+.site .hero2 p{font-size:18px;color:var(--muted);margin:0 0 16px}
+.site .cta{display:inline-block;background:var(--accent);color:#fff;font:600 14px/1 var(--label);padding:12px 18px;border-radius:4px}
+.site ol{margin:0;padding:18px 34px 22px 54px;font-size:16px}
+.site ol li{margin:0 0 8px}
+.ideas{display:grid;gap:14px}
+.ideaCard{background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--accent);border-radius:4px;padding:16px 20px}
+.ideaCard h4{font:600 18px/1.25 var(--label);margin:0 0 6px}
+.ideaCard p{margin:0 0 6px;font-size:16px}
+.ideaCard .ift{font-size:15px;color:var(--muted)}
+
+/* product, plan, lists */
+.moves{list-style:none;margin:0;padding:0;counter-reset:mv}
+.moves li{counter-increment:mv;display:grid;grid-template-columns:64px 1fr;gap:2px 18px;padding:18px 0;border-bottom:1px dashed var(--rule)}
+.moves li::before{content:counter(mv);grid-row:span 3;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:400 26px/1 var(--display)}
+.moves .area{font:600 11px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.moves h4{font:600 18px/1.3 var(--label);margin:4px 0 4px}
+.moves p{margin:0;font-size:16px}
+.status{display:inline-block;font:700 10.5px/1 var(--label);letter-spacing:.12em;text-transform:uppercase;padding:5px 7px;border-radius:3px;margin-left:8px;vertical-align:2px}
+.status.live{background:var(--known-soft);color:var(--known)} .status.part{background:var(--part-soft);color:var(--part)} .status.miss{background:var(--miss-soft);color:var(--miss)}
+.swc{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.swc > div{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px 18px;min-width:0}
+.swc h4{font:700 11px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;margin:0 0 10px}
+.swc .ship h4{color:var(--known)} .swc .wait h4{color:var(--part)} .swc .cut h4{color:var(--miss)}
+.swc ul{margin:0;padding-left:18px;font-size:15.5px}
+.further{columns:2;column-gap:34px;padding:0;margin:0;list-style:none}
+.further li{break-inside:avoid;margin:0 0 14px;padding-left:18px;position:relative;font-size:17px}
+.further li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
+.further b{font-family:var(--label);font-size:15px}
+.looks{display:flex;flex-wrap:wrap;gap:10px}
+.looks span{border:1px solid var(--accent);color:var(--accent-ink);border-radius:999px;padding:6px 14px;font:500 14px/1.3 var(--label)}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.timeline > div{background:var(--card);border:1px solid var(--rule);border-top:4px solid var(--accent);border-radius:4px;padding:14px 18px;min-width:0}
+.timeline h4{font:400 26px/1 var(--display);margin:0 0 10px;color:var(--accent-ink)}
+.timeline ul{margin:0;padding-left:18px;font-size:15.5px}
+.truths li,.risks li{margin:0 0 10px}
+.holds{background:var(--known-soft);border-radius:4px;padding:16px 20px;font-size:16.5px}
+.holds b{display:block;font:700 11px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--known);margin-bottom:8px}
+.tests{margin:12px 0 0}
+.tests ol{margin:8px 0 0;padding-left:22px;font-size:15px}
+.tests li{margin:0 0 6px}
+
+/* market tab */
+details{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px 20px;margin:0 0 14px}
+summary{cursor:pointer;font:600 15px/1.4 var(--label)}
+figure.map{margin:16px 0}
+figure.map svg{width:100%;height:auto;display:block}
+.map text{font-family:var(--label);fill:var(--ink)}
+.map .axis{stroke:var(--muted);stroke-width:1.4}
+.map .axis-label{font-size:13px;fill:var(--muted)}
+.map .comp{fill:var(--ink);fill-opacity:.06;stroke:var(--ink);stroke-width:1.4}
+.map .comp-label{font-size:12px}
+.map .us{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:6 5}
+.map .opt{stroke-width:2.2}
+.map .opt-num{font:700 14px var(--label)}
+.pitches{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.pitches .card q{display:block;font:400 19px/1.3 var(--display);quotes:"“" "”";margin:4px 0 8px}
+ol.sources{font-size:14.5px;color:var(--muted)}
+footer{padding:30px 0 80px;font-size:13.5px;color:var(--muted)}
+
+@media (prefers-reduced-motion:no-preference){.tab.on{animation:rise .35s ease both}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}}
+@media (max-width:860px){.doc{grid-template-columns:1fr;gap:0}.toc{display:none}}
+@media (max-width:760px){.journey,.kbs,.distance,.two,.messages,.words,.swc,.timeline{grid-template-columns:1fr}.further{columns:1}.pitch li{grid-template-columns:1fr;gap:4px}.strategy .hero::after{font-size:200px}}
+@media print{.bar,.toc{display:none}.js .tab{display:block}body{background:#fff}.tab{break-before:page}.doc{grid-template-columns:1fr}}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<nav class="bar" role="tablist" aria-label="Strategy drafts"><div class="wrap">
+  <span class="brand">{{PRODUCT}}</span>
+  <a class="tabbtn" role="tab" href="#overview" data-tab="overview"><i style="--accent:#191612"></i>Overview</a>
+  <!-- one per strategy; the colour matches its article -->
+  <a class="tabbtn" role="tab" href="#s1" data-tab="s1" style="--accent:#c2410c"><i></i>{{STRATEGY_1_NAME}}</a>
+  <a class="tabbtn" role="tab" href="#s2" data-tab="s2" style="--accent:#0f766e"><i></i>{{STRATEGY_2_NAME}}</a>
+  <a class="tabbtn" role="tab" href="#more" data-tab="more" style="--accent:#6b6358"><i></i>More directions</a>
+  <a class="tabbtn" role="tab" href="#market" data-tab="market" style="--accent:#6b6358"><i></i>Market &amp; sources</a>
+</div></nav>
+
+<!-- ================= OVERVIEW TAB ================= -->
+<section class="tab" id="overview" role="tabpanel">
+<div class="wrap">
+  <header class="cover">
+    <div class="label">Strategy drafts · {{VERSION}} · {{DATE}}</div>
+    <h1>{{PRODUCT}}</h1>
+    <p class="lede">{{ONE_SENTENCE_WHAT_IT_IS}}</p>
+    <p class="howto">{{HOW_TO_READ — e.g. “These are starting points, not answers. The first strategy is the one to hold if the product stays where it is. The others move it toward open ground nearby. Take what's useful from each, mix them, and say what to keep, change or drop. More directions has the other gaps we found.”}}</p>
+    <div class="lineup">
+      <a href="#s1" data-tab="s1" style="--accent:#c2410c;--accent-ink:#7c2d12"><div class="n">1</div><span class="kind">Hold · stay where you are</span><h3>{{STRATEGY_1_NAME}}</h3><p>{{STRATEGY_1_ONE_LINE_IDEA}}</p><div class="tl">“{{STRATEGY_1_PICKED_TAGLINE}}”</div><span class="open">Open strategy →</span></a>
+      <a href="#s2" data-tab="s2" style="--accent:#0f766e;--accent-ink:#134e4a"><div class="n">2</div><span class="kind">Move · {{WHERE_TO, e.g. "into ___"}}</span><h3>{{STRATEGY_2_NAME}}</h3><p>{{STRATEGY_2_ONE_LINE_IDEA}}</p><div class="tl">“{{STRATEGY_2_PICKED_TAGLINE}}”</div><span class="open">Open strategy →</span></a>
+    </div>
+    <p class="leaning"><b>Leaning:</b> {{ONE_LINE — which strategy and why; optional}}</p>
+    <!-- v2 onward; delete for v1 -->
+    <div class="changed">
+      <h4 class="label">What changed since {{PREVIOUS_VERSION}}</h4>
+      <p>{{FEEDBACK_QUOTED}}</p>
+      <ul><li><b>{{STRATEGY_NAME}}:</b> {{WHAT_CHANGED_AND_WHY}}</li></ul>
+    </div>
+  </header>
+
+  <section class="osec">
+    <div class="label">The starting point</div>
+    <h2 class="h">The business today</h2>
+    <div class="facts">
+      <div class="fact"><span class="label">What it is</span><p>{{PLAIN_DESCRIPTION}}</p></div>
+      <div class="fact"><span class="label">Who uses it now</span><p>{{CURRENT_CUSTOMERS_OR_NONE_YET}}</p></div>
+      <div class="fact"><span class="label">Where it stands</span><p>{{STAGE · WHAT'S LIVE · WHAT ISN'T}}</p></div>
+      <div class="fact"><span class="label">The goal</span><p>{{THE_GOAL_KEPT_SEPARATE_FROM_STRATEGY}}</p></div>
+      <div class="fact"><span class="label">What it already leans toward</span><p>{{REAL_TENDENCIES_OF_THE_BUSINESS}}</p></div>
+      <div class="fact"><span class="label">What it won't do</span><p>{{HARD_LINES_FROM_THE_INTERVIEW}}</p></div>
+    </div>
+  </section>
+
+  <section class="osec">
+    <div class="label">What we heard</div>
+    <h2 class="h">In your words</h2>
+    <div class="quotes">
+      <div class="quote"><q>{{VERBATIM_QUOTE}}</q><div class="who label">{{WHO · WHEN}}</div><div class="why">{{WHY_IT_MATTERS}}</div></div>
+    </div>
+  </section>
+
+  <section class="osec">
+    <div class="label">Where you stand</div>
+    <h2 class="h">{{ONE_LINE — where the product sits in the market today}}</h2>
+    <div class="narrow"><p>{{TWO_OR_THREE_SENTENCES — who it sits beside, the open ground nearby, and which of it each strategy goes after}}</p></div>
+  <figure class="map">
+    <svg viewBox="0 0 800 520" role="img" aria-label="{{MAP_ARIA}}">
+      <defs><marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>
+      <line class="axis" x1="80" y1="450" x2="760" y2="450"/><line class="axis" x1="80" y1="450" x2="80" y2="30"/>
+      <text class="axis-label" x="760" y="478" text-anchor="end">{{X_HIGH}} →</text>
+      <text class="axis-label" x="80" y="478">← {{X_LOW}}</text>
+      <text class="axis-label" x="66" y="40" text-anchor="end" transform="rotate(-90 66 40)">{{Y_HIGH}} →</text>
+      <circle class="comp" cx="300" cy="320" r="40"/><text class="comp-label" x="300" y="324" text-anchor="middle">{{COMPETITOR}}</text>
+      <circle class="us" cx="420" cy="260" r="30"/><text class="comp-label" x="420" y="306" text-anchor="middle">{{PRODUCT}} today</text>
+      <!-- 1 = the Hold, drawn on or beside today. 2–3 = Moves, each with an arrow from today -->
+      <circle class="opt" cx="440" cy="240" r="22" fill="#fdeee4" stroke="#c2410c"/><text class="opt-num" x="440" y="245" text-anchor="middle" fill="#c2410c">1</text>
+      <path class="move" d="M445 245 Q560 200 600 130" stroke="#0f766e"/>
+      <circle class="opt" cx="620" cy="110" r="26" fill="#e3f4f1" stroke="#0f766e"/><text class="opt-num" x="620" y="115" text-anchor="middle" fill="#0f766e">2</text>
+    </svg>
+    <figcaption class="label">{{MAP_CAPTION — dashed circle: where the product sits today. 1: the Hold. Arrows: where each Move takes it}}</figcaption>
+  </figure>
+  </section>
+
+  <section class="osec">
+    <div class="label">The market in one look</div>
+    <h2 class="h">{{ONE_LINE_MARKET_TRUTH}}</h2>
+    <div class="narrow"><p>{{TWO_OR_THREE_SENTENCES — what everyone competes on, where the open ground is, how much buyers care}}</p></div>
+    <p class="muted" style="font-size:16px">The full market reading, competitors' own words and sources are in the <a href="#market" data-tab="market">Market &amp; sources</a> tab.</p>
+  </section>
+
+  <!-- Only for products that haven't launched: delete this section otherwise. -->
+  <section class="osec">
+    <div class="label">Before launch</div>
+    <h2 class="h">How the market picks</h2>
+    <p class="narrow">{{ONE_CHEAP_TEST_THAT_RUNS_EVERY_STRATEGY_AT_ONCE — e.g. one landing page or deposit offer per strategy, same kind of buyer, same budget and dates}}</p>
+    <ul class="shared narrow">
+      <li><b>{{STRATEGY_NAME}}:</b> {{WHAT_THE_BUYER_SEES · THE_PASS_MARK}}</li>
+    </ul>
+    <p class="muted narrow">{{DECIDE_BY_DATE · WHAT_HAPPENS_IF_NONE_PASSES}}</p>
+  </section>
+
+  <section class="osec" style="border-bottom:0">
+    <div class="label">Every strategy here</div>
+    <h2 class="h">What they have in common</h2>
+    <ul class="shared narrow">
+      <li>{{SHARED_GROUND — e.g. the buyer they all serve, the rules every draft follows, what none of them will do}}</li>
+    </ul>
+  </section>
+</div>
+</section>
+
+<!-- ================= STRATEGY TAB: copy per strategy; set id, data-n, accent vars ================= -->
+<article class="tab strategy" id="s1" role="tabpanel" style="--accent:#c2410c;--accent-soft:#fdeee4;--accent-ink:#7c2d12">
+  <div class="hero" data-n="1"><div class="wrap">
+    <div class="label kicker">Strategy 1 of {{N}} <span class="kind">{{Hold · stay where you are | Move · into ___}}</span></div>
+    <h2 class="name">{{STRATEGY_NAME — 3–6 plain words saying who it's for and what changes; no metaphor}}</h2>
+    <p class="idea">{{THE_BET — one clunky sentence, no feature names}}</p>
+    <div class="heroline"><q>{{PICKED_TAGLINE}}</q><span>{{SUBLINE}}</span></div>
+    <div class="from">{{OPTIONAL — “Combined from …” or “Renamed from …”}}</div>
+    <div class="revised"><b>Revised in {{VERSION}}</b> — {{WHAT_CHANGED_QUOTING_FEEDBACK}}</div>
+  </div></div>
+
+  <div class="wrap doc">
+    <nav class="toc" aria-label="Contents"><span class="label">In this strategy</span>
+      <ol>
+        <li><a href="#s1-core">The strategy</a></li>
+        <li><a href="#s1-move">From here to there</a></li>
+        <li><a href="#s1-buyer">The buyer</a></li>
+        <li><a href="#s1-argument">The argument</a></li>
+        <li><a href="#s1-different">How it's different</a></li>
+        <li><a href="#s1-taglines">Taglines</a></li>
+        <li><a href="#s1-messaging">How to talk about it</a></li>
+        <li><a href="#s1-marketing">Marketing</a></li>
+        <li><a href="#s1-brand">Brand</a></li>
+        <li><a href="#s1-product">Product</a></li>
+        <li><a href="#s1-further">Across the business</a></li>
+        <li><a href="#s1-plan">First 90 days</a></li>
+        <li><a href="#s1-risks">Risks and checks</a></li>
+        <li><a href="#s1-why">Why it matters</a></li>
+        <li><a href="#s1-holds">How it holds up</a></li>
+      </ol>
+    </nav>
+
+    <div class="body">
+      <!-- 1 -->
+      <section class="part" id="s1-core"><span class="label">1 · The strategy</span><h3>{{HEADLINE_FOR_THIS_PART}}</h3>
+        <div class="statement">{{THE_BET — what the business will be, for whom; about 30 words at most; no feature, screen or setting names}}</div>
+        <span class="sub">The reading behind it</span>
+        <div class="two">
+          <div class="card"><span class="label">What everyone assumes</span><p>{{THE_CATEGORY_ASSUMPTION — with evidence}}</p></div>
+          <div class="card"><span class="label">What we see instead</span><p>{{WHY_IT_FALLS_SHORT — a pain buyers already act on, sourced}}</p></div>
+          <div class="card"><span class="label">The true competitor</span><p>{{WHAT_THE_BUYER_WOULD_OTHERWISE_DO}}</p></div>
+          <div class="card"><span class="label">What we give up</span><p>{{THE_SACRIFICE_A_SENSIBLE_COMPETITOR_WOULD_NOT_MAKE}}</p></div>
+        </div>
+        <span class="sub">Stands for · the enemy</span>
+        <div class="two">
+          <div class="card"><span class="label">Stands for</span><span class="word">{{ONE_OR_TWO_WORDS}}</span><p>{{WHAT_THE_BUYER_SHOULD_REMEMBER}}</p></div>
+          <div class="card"><span class="label">The enemy</span><span class="word">{{THE_ENEMY}}</span><p>{{THE_STATUS_QUO_HABIT_OR_BELIEF_THE_BUYER_FIGHTS — never a named competitor}}</p></div>
+        </div>
+        <span class="sub">The 20-second pitch</span>
+        <ol class="pitch">
+          <li><span class="q">What it is</span><span class="a">{{PLAIN_CONTEXT — one sentence}}</span></li>
+          <li><span class="q">The problem</span><span class="a">{{THE_PROBLEM_IT_SOLVES — one sentence}}</span></li>
+          <li><span class="q">Why it's different</span><span class="a">{{WHAT_OTHERS_IGNORE_AND_WHAT_THIS_DOES — one sentence}}</span></li>
+        </ol>
+      </section>
+
+      <!-- 2: every strategy. Hold: short (what you double down on, what you stop). Move: the heart of the tab -->
+      <section class="part" id="s1-move"><span class="label">2 · From here to there</span><h3>{{THE_MOVE_IN_A_LINE — e.g. “Stay put and go deeper” or “From ___ to ___”}}</h3>
+        <div class="journey">
+          <div class="end"><span class="label">Today</span><p>{{WHERE_IT_SITS_NOW — buyer, use, position, in plain words}}</p></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="end to"><span class="label">Under this strategy</span><p>{{WHERE_IT_ENDS_UP}}</p></div>
+        </div>
+        <span class="sub">The gap</span>
+        <p>{{WHO_IS_UNDERSERVED_THERE_AND_THE_EVIDENCE — buyer words, workarounds, who has left it open and why; for a Hold, the ground it already holds}}</p>
+        <span class="sub">Enough of them</span>
+        <p>{{SIZE_MATH — reachable buyers × the price stance from part 9, against the goal. Same price model as part 9; each ratio sourced or labelled a guess}}</p>
+        <span class="sub">Keep · build · stop</span>
+        <div class="kbs">
+          <div><h4>Keep</h4><ul><li>{{WHAT_CARRIES_OVER — the real asset this rests on}}</li></ul></div>
+          <div><h4>Build or change</h4><ul><li>{{WHAT_IS_NEW}}</li></ul></div>
+          <div><h4>Stop or give up</h4><ul><li>{{WHAT_IT_COSTS}}</li></ul></div>
+        </div>
+        <div class="distance">
+          <div class="card"><span class="label">How far</span><b>{{SMALL | MEDIUM | LARGE}}</b><p>{{ROUGH_SIZE — weeks or months, people, what's risky}}</p></div>
+          <div class="card"><span class="label">First cheap test</span><p>{{HOW_TO_CHECK_THE_GAP_BEFORE_BUILDING}}</p></div>
+          <div class="card"><span class="label">Commit when</span><p>{{THE_SIGNAL_THAT_SAYS_GO}}</p></div>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="part" id="s1-buyer"><span class="label">3 · The buyer</span><h3>{{WHO_IN_A_PHRASE}}</h3>
+        <p>{{WHO_DECIDES_TO_BUY — role, size, situation, what they value; described by how they work, never by a feature}}</p>
+        <span class="sub">The moment they feel it</span>
+        <p>{{THE_REAL_BUYING_MOMENT — a switching story or a week in their life, concrete}}</p>
+        <span class="sub">In their words</span>
+        <div class="voice"><q>{{VERBATIM_BUYER_QUOTE}}</q><div class="src">{{SOURCE · link}}</div></div>
+        <span class="sub">Who it's not for</span>
+        <p>{{WHO_IT_TURNS_AWAY_AND_WHY_THAT_IS_GOOD}}</p>
+        <p class="muted">{{WHAT_IT_GIVES_UP}}</p>
+      </section>
+
+      <!-- 3 -->
+      <section class="part" id="s1-argument"><span class="label">4 · The argument</span><h3>{{THE_BIG_IDEA_AS_A_HEADLINE}}</h3>
+        <p>{{TODAY — how things are now, the enemy at work}}</p>
+        <p>{{WHY_IT_FALLS_SHORT}}</p>
+        <p>{{WHAT_THIS_STRATEGY_DOES_DIFFERENTLY}}</p>
+        <span class="sub">The story we tell</span>
+        <div class="story">{{ENEMY_AND_HERO_NARRATIVE — the buyer is the hero; 4–6 sentences a customer would recognise}}</div>
+        <span class="sub">The objections, answered</span>
+        <div class="objections">
+          <div class="objection"><b>“{{OBJECTION}}”</b><p>{{ANSWER}}</p></div>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="part" id="s1-different"><span class="label">5 · How it's different</span><h3>{{WHERE_IT_SITS_IN_A_LINE}}</h3>
+        <p>{{WHAT_IS_UNIQUE_IN_PLAIN_WORDS — never “the only ___”}}</p>
+        <div class="alts">
+          <div class="alt"><h4>{{ALTERNATIVE}}</h4><dl>
+            <dt>What they own</dt><dd>{{THEIR_GROUND_IN_THEIR_WORDS}}</dd>
+            <dt>Where this strategy sits</dt><dd>{{OUR_GROUND}}</dd>
+            <dt>Why they won't follow</dt><dd>{{WHAT_THEY_WOULD_HAVE_TO_GIVE_UP}}</dd>
+          </dl></div>
+        </div>
+        <p class="swap"><b>Logo-swap check:</b> {{PUT_A_COMPETITOR'S_NAME_ON_THE_PITCH_AND_SAY_WHY_IT_BREAKS}}</p>
+      </section>
+
+      <!-- 5 -->
+      <section class="part" id="s1-taglines"><span class="label">6 · Taglines</span><h3>Lines to rally around</h3>
+        <!-- The three best lines from the separate tagline judge. If none scored 8, change the h3 to "Working lines, none strong yet". -->
+        <div class="pick"><div class="label">The pick · {{TYPE}}</div><q>{{PICKED_TAGLINE}}</q><div class="subline">{{SUBLINE}}</div><div class="note">{{WHY_THIS_ONE}}</div></div>
+        <div class="tags">
+          <div class="tag"><span class="type">{{TYPE}}</span><q>{{TAGLINE}}</q><p>{{WHAT_IT_SAYS_READ_COLD}}</p></div>
+          <div class="tag"><span class="type">{{TYPE}}</span><q>{{TAGLINE}}</q><p>{{WHAT_IT_SAYS_READ_COLD}}</p></div>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="part" id="s1-messaging"><span class="label">7 · How to talk about it</span><h3>One promise, said the same way everywhere</h3>
+        <p class="promise">{{THE_ONE_PROMISE — the outcome the buyer gets}}</p>
+        <div class="messages">
+          <div class="msg"><h4>{{PROOF_POINT}}</h4><p>{{THE_SPECIFIC_EVIDENCE}}</p><p><i>Say it like:</i> “{{EXAMPLE_LINE}}”</p></div>
+          <div class="msg"><h4>{{PROOF_POINT}}</h4><p>{{THE_SPECIFIC_EVIDENCE}}</p><p><i>Say it like:</i> “{{EXAMPLE_LINE}}”</p></div>
+          <div class="msg"><h4>{{PROOF_POINT}}</h4><p>{{THE_SPECIFIC_EVIDENCE}}</p><p><i>Say it like:</i> “{{EXAMPLE_LINE}}”</p></div>
+        </div>
+        <span class="sub">Words we use · words we avoid</span>
+        <div class="words">
+          <div class="card"><span class="label">Use</span><ul><li>{{WORD_OR_PHRASE — ideally the buyer's own}}</li></ul></div>
+          <div class="card no"><span class="label">Avoid</span><ul><li>{{WORD_OR_PHRASE — category clichés, insider terms, lines that sound lazy or like surveillance}}</li></ul></div>
+        </div>
+        <span class="sub">The voice</span>
+        <div class="traits">
+          <div class="trait"><h4>{{TRAIT}}</h4><p>{{WHAT_IT_SOUNDS_LIKE}}</p><p class="not">Not: {{WHAT_IT_ISN'T}}</p></div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="part" id="s1-marketing"><span class="label">8 · Marketing</span><h3>Where it shows up first</h3>
+        <span class="sub">The homepage, first screen</span>
+        <div class="site"><div class="chrome"><i></i><i></i><i></i></div>
+          <div class="hero2"><h4>{{HOMEPAGE_HEADLINE}}</h4><p>{{HOMEPAGE_SUBLINE}}</p><span class="cta">{{CALL_TO_ACTION}}</span></div>
+          <ol><li>{{SECTION — what the next scroll shows and why}}</li></ol>
+        </div>
+        <span class="sub">Campaign ideas</span>
+        <div class="ideas">
+          <div class="ideaCard"><h4>{{CAMPAIGN_NAME}}</h4><p>{{WHAT_PEOPLE_SEE_AND_HEAR}}</p><p class="ift"><b>If this, then that:</b> {{THE_PROMISE_EXAGGERATED_INTO_A_CONSEQUENCE_THE_BUYER_RECOGNISES}}</p></div>
+        </div>
+        <span class="sub">The two best channels</span>
+        <ul class="further"><li><b>{{CHANNEL}}:</b> {{WHY_THIS_BUYER_IS_THERE_WHEN_THEY_FEEL_THE_PAIN · WHAT_TO_PUT_THERE_FIRST · WHETHER_ITS_COST_FITS_THE_PRICE}}</li></ul>
+      </section>
+
+      <!-- 8 -->
+      <section class="part" id="s1-brand"><span class="label">9 · Brand</span><h3>How it looks, sounds and prices</h3>
+        <span class="sub">Look and feel to borrow</span>
+        <div class="looks"><span>{{BRAND · WHAT TO BORROW}}</span></div>
+        <p style="margin-top:14px">{{CATEGORY_CUES_TO_KEEP_AND_WHAT_TO_BREAK}}</p>
+        <span class="sub">Price stance</span>
+        <p>{{PRICE_STANCE — what you charge for (per person, per company, size bands), a rough level against what the buyer pays today (price map), what that signals, discount rules. The sizing in part 2 uses this same model. An assumption until the go-to-market work tests it}}</p>
+        <span class="sub">Names and words</span>
+        <p>{{NAMING_IMPLICATIONS — what to call features, plans or the category; or delete}}</p>
+      </section>
+
+      <!-- 9 -->
+      <section class="part" id="s1-product"><span class="label">10 · Product</span><h3>What to build or change first</h3>
+        <ol class="moves">
+          <li><span class="area">{{AREA}}</span><h4>{{MOVE}} <span class="status miss">Missing today</span></h4><p>{{WHAT_CUSTOMERS_WOULD_SEE}}</p></li>
+        </ol>
+        <span class="sub">Ship · wait · cut</span>
+        <div class="swc">
+          <div class="ship"><h4>Ship first</h4><ul><li>{{ITEM}}</li></ul></div>
+          <div class="wait"><h4>Can wait</h4><ul><li>{{ITEM}}</li></ul></div>
+          <div class="cut"><h4>Cut or stop</h4><ul><li>{{ITEM}}</li></ul></div>
+        </div>
+        <span class="sub">The first ten minutes</span>
+        <p>{{ONBOARDING — what a new customer sees and does first under this strategy}}</p>
+      </section>
+
+      <!-- 10 -->
+      <section class="part" id="s1-further"><span class="label">11 · Across the business</span><h3>The flood: what else it changes</h3>
+        <ul class="further">
+          <li><b>{{AREA — pricing, sales, onboarding, support, hiring, rituals, community, partnerships, founder marketing}}:</b> {{IDEA — 6–10 in all}}</li>
+        </ul>
+      </section>
+
+      <!-- 11 -->
+      <section class="part" id="s1-plan"><span class="label">12 · First 90 days</span><h3>What happens next</h3>
+        <div class="timeline">
+          <div><h4>30 days</h4><ul><li>{{ACTION}}</li></ul></div>
+          <div><h4>60 days</h4><ul><li>{{ACTION}}</li></ul></div>
+          <div><h4>90 days</h4><ul><li>{{ACTION}}</li></ul></div>
+        </div>
+      </section>
+
+      <!-- 12 -->
+      <section class="part" id="s1-risks"><span class="label">13 · Risks and checks</span><h3>What has to be true</h3>
+        <ul class="truths"><li>{{ASSUMPTION}} — <i>check:</i> {{CHEAP_TEST}}</li></ul>
+        <span class="sub">Risks</span>
+        <ul class="risks"><li>{{RISK}} — <i>if it happens:</i> {{RESPONSE}}</li></ul>
+      </section>
+
+      <!-- 13 -->
+      <section class="part" id="s1-why"><span class="label">14 · Why it matters</span><h3>{{PURPOSE_LINE — internal, never a message}}</h3>
+        <p>{{WHY — the motivating reason, kept separate from the strategy}}</p>
+      </section>
+
+      <!-- 14 -->
+      <section class="part" id="s1-holds"><span class="label">15 · How it holds up</span><h3>Checked before you saw it</h3>
+        <div class="holds"><b>Holds up</b>{{TWO_LINES — what's unique in plain words and against whom; the reasons that matter}}</div>
+        <details class="tests"><summary>All the checks, with reasons</summary>
+          <ol><li><b>{{TEST_NAME}}:</b> {{ONE_LINE_REASON}}</li></ol>
+        </details>
+      </section>
+    </div>
+  </div>
+</article>
+<!-- ================= end strategy tab ================= -->
+
+<!-- ================= MORE DIRECTIONS TAB ================= -->
+<!-- Gaps and angles found in research that didn't become a full strategy. Starting points, not strategies:
+     they are not graded. Never include an idea James rejected (Taste log), a feature dressed as a strategy,
+     or ground a competitor already owns. 4–8 cards. -->
+<section class="tab" id="more" role="tabpanel">
+<div class="wrap" style="padding-top:64px">
+  <div class="label">More directions</div>
+  <h2 class="h">Other gaps worth a look</h2>
+  <div class="narrow"><p>{{ONE_PARAGRAPH — these are open spaces the research turned up near the product. Each could become a strategy with more work; say which one you'd develop next and why. It can't be one that outscored a Move: that one should have been the Move.}}</p></div>
+  <div class="gaps">
+    <div class="gap"><span class="label">{{KIND — new buyer · neglected job · incumbent retreating · new shift · nearby category}}</span><h4>{{THE_GAP_IN_A_PHRASE}}</h4>
+      <p>{{THE_IDEA_IN_ONE_PLAIN_SENTENCE}}</p>
+      <dl>
+        <dt>Evidence</dt><dd>{{WHAT_SHOWS_THE_GAP_IS_REAL · source}}</dd>
+        <dt>Carries over</dt><dd>{{WHAT_THE_PRODUCT_ALREADY_HAS}}</dd>
+        <dt>Would take</dt><dd>{{WHAT_IT_WOULD_NEED}}</dd>
+        <dt>Open question</dt><dd>{{WHAT_STOPS_IT_BEING_A_FULL_STRATEGY_YET}}</dd>
+        <dt>Score</dt><dd>{{N/25 — its strongest and weakest of pain · size · carry-over · distance · defensibility}}</dd>
+        <dt>Why not a Move</dt><dd>{{THE_ONE_REASON_IT_SCORED_BELOW_THE_MOVES}}</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================= MARKET & SOURCES TAB ================= -->
+<section class="tab" id="market" role="tabpanel">
+<div class="wrap" style="padding-top:64px">
+  <div class="label">Market &amp; sources</div>
+  <h2 class="h">Reading the market</h2>
+  <div class="narrow"><p>{{TWO_OR_THREE_PARAGRAPHS — the category, what everyone competes on, how much buyers care, what's changing}}</p></div>
+  <span class="sub" style="color:var(--muted)">In their own words: the sameness check</span>
+  <div class="pitches">
+    <div class="card"><span class="label">{{COMPETITOR}}</span><q>{{HOMEPAGE_HEADLINE_QUOTED}}</q><p class="muted">{{WHAT_IT_CLAIMS · source}}</p></div>
+  </div>
+  <p class="swap">{{COULD_YOU_SWAP_THE_LOGOS? — one line}}</p>
+  <span class="sub" style="color:var(--muted)">What buyers say</span>
+  <div class="voice"><q>{{VERBATIM_BUYER_QUOTE}}</q><div class="src">{{SOURCE · link}}</div></div>
+  <details open style="margin-top:28px"><summary>Sources</summary><ol class="sources"><li id="src1"><a href="{{URL}}">{{TITLE}}</a> — checked {{DATE}}</li></ol></details>
+  <footer>Built with the Strategy Builder skill (after Alex M H Smith, <i>No Bullsh*t Strategy</i>; messaging after Brand Boss, @brandbosshq). Session record: {{PATH_TO_STRATEGY_NOTE}}.</footer>
+</div>
+</section>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var ids=tabs.map(function(t){return t.id});
+  function owner(id){
+    if(ids.indexOf(id)>-1) return id;
+    var el=id&&document.getElementById(id);
+    var t=el&&el.closest?el.closest('.tab'):null;
+    return t?t.id:'overview';
+  }
+  function show(hash,scroll){
+    var id=(hash||'').replace('#','')||'overview';
+    var tab=owner(id);
+    tabs.forEach(function(t){t.classList.toggle('on',t.id===tab)});
+    document.querySelectorAll('.tabbtn').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===tab?'true':'false')});
+    if(scroll){
+      if(id===tab) window.scrollTo(0,0);
+      else { var el=document.getElementById(id); if(el) el.scrollIntoView(); }
+    }
+  }
+  window.addEventListener('hashchange',function(){show(location.hash,true)});
+  show(location.hash,false);
+})();
+</script>
+</body>
+</html>
